@@ -1,18 +1,26 @@
 {
-  "name": "simple_http",
-  "version": "0.0.0",
-  "description": "A simple HTTP example using status codes.",
-  "main": "server.js",
+  "name": "projectapi",
+  "version": "1.0.0",
+  "description": "First Project",
+  "main": "./src/server.js",
   "scripts": {
     "start": "node ./src/server.js",
     "pretest": "eslint ./src --fix",
-    "test": "echo \"Tests complete\""
+    "test": "echo \"Test complete\""
   },
-  "author": "Cody Van De Mark",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lcc4935/ProjectApi.git"
+  },
+  "author": "Lauren Casale",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/lcc4935/ProjectApi/issues"
+  },
+  "homepage": "https://github.com/lcc4935/ProjectApi#readme",
   "devDependencies": {
-    "eslint": "^4.5.0",
-    "eslint-config-airbnb": "^15.1.0",
-    "eslint-plugin-import": "^2.7.0"
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.24.2"
   }
 }
