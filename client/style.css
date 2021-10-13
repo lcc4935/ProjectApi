@@ -1,21 +1,110 @@
-html, body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
+h1 {
+  color: #ffffff;
 }
 
-#top {
-  text-align: center;
-  margin: 0 auto;
+h3 {
+  color: #020402;
 }
 
-#top h1 {
-  font-size: 2em;
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: .2fr .1fr 1fr 1fr;
+  border: 2px solid black;
+}
+
+.title {
+  background-color: #ba324f;
+  grid-column: 1 / span 3;
+  grid-row: 1/ span 1;
+}
+
+.info {
+  background-color: #da7422;
+  grid-column: 1/ span 1;
+  grid-row: 3/ span 2;
+
+  display: inline-block;
+}
+
+.display {
+  grid-column: 2 /span 2;
+  grid-row: 3/ span 2;
+
+  background-color: #ffffff;
+  display: inline-block;
+}
+
+.miniWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: .5fr 1.5fr 3fr;
+  border: 2px solid black;
 }
 
 #content {
-  margin-top: 100px;
-  font-size: 2em;
-  text-align: center;
+  background-color: green;
+  grid-column: 1 /span 2;
+  grid-row: 1/ span 1;
+
+  display: inline-block;
+}
+
+#todayDate {
+  background-color: purple;
+  grid-column: 1 /span 1;
+  grid-row: 2/ span 1;
+
+  display: inline-block;
+}
+
+#eventDate {
+  background-color: pink;
+  grid-column: 2 /span 1;
+  grid-row: 2/ span 1;
+
+  display: inline-block;
+}
+
+#countdown {
+  background-color: blue;
+  grid-column: 1 /span 2;
+  grid-row: 3/ span 1;
+
+  display: inline-block;
+}
+
+.countdownWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  border: 2px solid red;
+}
+
+.day {
+  grid-column: 1 /span 1;
+  grid-row: 1/ span 1;
+}
+
+.month {
+  grid-column: 2 /span 1;
+  grid-row: 1/ span 1;
+ }
+
+.year {
+  grid-column: 3 /span 1;
+  grid-row: 1/ span 1;
+}
+
+.day, .month, .year {
+  display: inline-block;
+
+  background-color: #d6d6d6;
+  box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, .8);
+
+  color: #ba324f;
+  font-size: 28px;
+
+  padding: 50px, 10px, 50px, 10px;
+  margin: 10px;
 }

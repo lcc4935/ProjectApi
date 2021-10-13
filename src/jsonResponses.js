@@ -1,80 +1,108 @@
-const event = {};
+const events = {};
 
+// JSON Body
 const respondJSON = (request, response, status, object) => {
   response.writeHead(status, { 'Content-Type': 'application/json' });
   response.write(JSON.stringify(object));
   response.end();
 };
 
+// JSON Body, response & status
 const respondJSONMeta = (request, response, status) => {
   response.writeHead(status, { 'Content-Type': 'application/json' });
   response.end();
 };
 
-const getEvent = (request, response) => {
+// Event
+const getEvent = (request, response, body) => {
+  let responseJSON = {
+
+  };
+  if (!(body.name in events)) {
+    responseJSON.id = 'notFound';
+    responseJSON.message = 'Event does not exist';
+    return respondJSON(request, response, 400, responseJSON);
+  }
+  if (body.name in events) {
+    responseJSON = events[body.name];
+    return respondJSON(request, response, 200, responseJSON);
+  }
+  return respondJSON(request, response, 200, responseJSON);
+};
+
+// Meta
+const getEventMeta = (request, response) => respondJSONMeta(request, response, 204);
+
+// Event All
+const getAll = (request, response) => {
   const responseJSON = {
-    event,
+    events,
   };
 
   respondJSON(request, response, 200, responseJSON);
 };
 
-const addDate = (request, response, body) => {
+// Adds event, Head
+const addEvent = (request, response, body) => {
   const responseJSON = {
-    message: 'Name is required',
+    message: 'Requires a name and date',
   };
-
-  if (!body.name) {
+  if (!body.name || !body.date) {
+    responseJSON.id = 'missingParams';
+    return respondJSON(request, response, 400, responseJSON);
+  }
+  if (body.name in events) {
+    responseJSON.message = 'Event already exists';
     responseJSON.id = 'missingParams';
     return respondJSON(request, response, 400, responseJSON);
   }
 
-  let responseCode = 201;
-  if (event[body.name]) {
-    responseCode = 204;
-  } else {
-    event[body.name] = {};
+  // Event object
+  events[body.name] = {
+    name: body.name,
+    date: body.date,
+  };
+  responseJSON.message = 'Event created';
+  return respondJSON(request, response, 201, responseJSON);
+};
+
+// Update
+const updateEvent = (request, response, body) => {
+  const responseJSON = {
+    message: 'Event was not found',
+  };
+  if (!(body.name in events)) {
+    responseJSON.id = 'notFound';
+    return respondJSON(request, response, 400, responseJSON);
   }
-  event[body.name].name = body.name;
-  event[body.name].dates = body.date;
 
-  if (responseCode === 201) {
-    responseJSON.message = 'Created Successfully';
-    console.log(`Event: ${event[body.name].name}`);
-    console.log(`today: ${event[body.name].dates[0]}, date: `, event[body.name].dates[1]);
+  const responseCode = 204;
+  events[body.name].date = body.date;
 
-    // day
-    const numDate1 = parseInt(event[body.name].dates[1].split('-')[2], 10);
-    const numDate0 = parseInt(event[body.name].dates[0].split('-')[2], 10);
-    console.log(`${numDate1 - numDate0} days until the date`);
-
-    // month
-    const numMonth1 = parseInt(event[body.name].dates[1].split('-')[1], 10);
-    const numMonth0 = parseInt(event[body.name].dates[0].split('-')[1], 10);
-    console.log(`${numMonth1 - numMonth0} months until the date`);
-
-    // year
-    const numyear1 = parseInt(event[body.name].dates[1].split('-')[0], 10);
-    const numyear0 = parseInt(event[body.name].dates[0].split('-')[0], 10);
-    console.log(`${numyear1 - numyear0} years until the date`);
-
-    return respondJSON(request, response, responseCode, responseJSON);
-  }
   return respondJSONMeta(request, response, responseCode);
 };
 
+// 404
 const notReal = (request, response) => {
   const responseJSON = {
     message: 'The page you are looking for was not found',
     id: 'notFound',
   };
-
   const responseCode = 404;
   return respondJSON(request, response, responseCode, responseJSON);
 };
 
+// Head 404
+const notRealMeta = (request, response) => {
+  respondJSONMeta(request, response, 404);
+};
+
 module.exports = {
   getEvent,
-  addDate,
+  addEvent,
+  getAll,
+  updateEvent,
   notReal,
+  getEventMeta,
+  notRealMeta,
 };

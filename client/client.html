@@ -2,170 +2,87 @@
 <html lang="en">
 
 <head>
-  <title>Project API</title>
+  <title>Event Countdown</title>
   <link rel="stylesheet" type="text/css" href="/style.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
-  <script type="text/babel">
-
-    const handleResponse = (xhr, parseResponse) => {
-      const content = document.querySelector('#content');
-
-      switch (xhr.status) {
-        //success
-        case 200:
-          content.innerHTML = `<b>Success</b>`;
-          break;
-        //created
-        case 201:
-          content.innerHTML = `<b>Created</b>`;
-          break;
-        //updated
-        case 204:
-          content.innerHTML = `<b>Updated (No Content)</b>`;
-          parseResponse = false;
-          break;
-        //bad request
-        case 400:
-          content.innerHTML = `<b>Bad Request</b>`;
-          break;
-        //not found
-        case 404:
-          content.innerHTML = `<b>Resource Not Found</b>`;
-          break;
-      }
-
-      if (parseResponse) {
-        const obj = parseJSON(xhr, content)
-        console.dir(obj);
-      }
-    };
-
-    const parseJSON = (xhr, content) => {
-      const obj = JSON.parse(xhr.response);
-
-      if (obj.message) {
-        const p = document.createElement('p');
-        p.textContent = `Message: ${obj.message}`;
-        content.appendChild(p);
-      }
-
-      if (obj.event) {
-        const eventName = document.createElement('h2');
-        // const todayDate = document.createElement('p');
-        // const addedDate = document.createElement('p');
-
-        // const eventNamesObj = JSON.stringify(obj.event.name);
-        // console.log(JSON.stringify(obj.event));
-        const event = JSON.stringify(obj.event);
-
-        // eventName.textContent = event;
-        // console.log(event);
-        eventName.textContent = obj.event.name;
-        eventName.textContent = event;
-        content.appendChild(eventName);
-        // todayDate.textContent = event[body.name].dates[0]
-        // content.appendChild(todayDate);
-        // addedDate.textContent = event[body.name].dates[1]
-        // content.appendChild(addedDate);
-      }
-
-      console.log(obj.event);
-      return obj;
-    };
-
-
-    const getRequest = (e, userForm) => {
-      const url = userForm.querySelector('#urlField').value;
-      const method = userForm.querySelector('#methodSelect').value;
-
-      const xhr = new XMLHttpRequest();
-      xhr.open(method, url);
-      xhr.setRequestHeader('Accept', 'application.json');
-
-      if (method == 'get') {
-        xhr.onload = () => handleResponse(xhr, true);
-      } else {
-        xhr.onload = () => handleResponse(xhr, false);
-      }
-      xhr.send();
-      e.preventDefault(e);
-      return false;
-    }
-
-
-    const sendPost = (e, nameForm) => {
-      const nameAction = nameForm.getAttribute('action');
-      const nameMethod = nameForm.getAttribute('method');
-
-      const nameField = nameForm.querySelector('#nameField');
-      const tDate = nameForm.querySelector('#tDate');
-      const aDate = nameForm.querySelector('#aDate');
-
-      const xhr = new XMLHttpRequest();
-
-
-      xhr.open(nameMethod, nameAction);
-
-      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-      xhr.setRequestHeader('Accept', 'application/json');
-
-      xhr.onload = () => handleResponse(xhr, true);
-
-
-
-      const formData = `name=${nameField.value}&date=${tDate.value}&date=${aDate.value}`;
-
-      xhr.send(formData);
-
-      e.preventDefault();
-      return false;
-    };
-
-    const init = () => {
-      const nameForm = document.querySelector('#nameForm');
-      const addDate = (e) => sendPost(e, nameForm);
-      nameForm.addEventListener('submit', addDate);
-
-      const userForm = document.querySelector('#userForm');
-      const getEvent = (e) => getRequest(e, userForm);
-      userForm.addEventListener('submit', getEvent);
-    }
-    window.onload = init;
-  </script>
+  <script type="text/javascript"
+    src="https://github.com/niklasvh/html2canvas/releases/download/0.5.0-alpha1/html2canvas.js"></script>
+  <script src=/client.js></script>
 </head>
 
 <body>
-  <section id="top">
-    <h3>Add Events</h3>
-    <form id="nameForm" action="/addDate" method="post">
-      <label for="name">Name of event </label>
-      <input id="nameField" type="text" name="name" />
+  <section class="wrapper">
+    <div class="title">
+      <h1>Event Countdown</h1>
+    </div>
 
-      <label for="todayDate">What is Today's Date</label>
-      <input type="date" id="tDate" name="todayDate" value = "2021-01-01" min ="2021-01-01" max = "2025-12-31">
+    <div class="info">
+      <h3>Add an Event</h3>
+      <form id="nameForm" action="/addEvent" method="post">
+        <label for="eventName">Event Name: </label>
+        <input id="nameField" type="text" name="eventName" />
+        <br>
+        <label for="eventDate">Event Date: </label>
+        <input id="dateField" type="date" name="date" />
+        <input type="submit" value="Add Event" />
+        <br>
+      </form>
 
-      <label for="addDate">Date you want to add</label>
-      <input type="date" id="aDate" name="addDate" value = "2021-01-01" min ="2021-01-01" max = "2025-12-31">
 
-      <input type="submit" value="Add Event" />
+      <h3>Select Event</h3>
+      <form id="eventForm" action="/getEvent" method="get">
+        <select id='eventField'>
+          <option value='/getEvent'>Event Name</option>
+        </select>
+        <input type="submit" value="Get Event" />
+        <button type="button" id="updateButton">Update Event</button>
+      </form>
+    </div>
 
-    </form>
-    <form id="userForm" action="/getEvent" method="get">
-      <select id='urlField'>
-        <option value='/getEvent'>getEvent</option>
-        <option value='/notReal'>notReal</option>
-      </select>
-      <select id="methodSelect">
-        <option value="get">GET</option>
-        <option value="head">HEAD</option>
-      </select>
-      <input type="submit" value="Get Event" />
-    </form>
+    <div class="display">
+      <div class="miniWrapper">
+
+        <span id="content"></span>
+
+        <span id="todayDate">
+          <h2>Today's Date</h2>
+        </span>
+
+        <span id="eventDate">
+          <h2>Event Date</h2>
+        </span>
+
+        <span id="countdown">
+          <h2>Countdown</h2>
+        </span>
+
+        <div class="countdownWrapper">
+
+          <div class="day">
+            <span id="days"></span>
+          </div>
+
+          <div class="month">
+            <span id="months"></span>
+          </div>
+
+          <div class="year">
+            <span id="years"></span>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
   </section>
-  <section id="content">
 
-  </section>
 </body>
 
 </html>
+
+<!--References https://stackoverflow.com/questions/6394473/variable-number-of-input-fields-in-form
+https://stackoverflow.com/questions/38795210/how-to-create-a-form-with-a-variable-number-of-inputs
+https://github.com/neocotic/qrious
+https://html2canvas.hertzen.com/getting-started  https://stackoverflow.com/questions/53757970/downloading-data-tables-from-html-as-image/53758301
+-->
