@@ -1,6 +1,3 @@
-//https://date-fns.org/ - library
-//import { interval } from 'date-fns'
-
 // Requests
 const handleResponse = (xhr, parseResponse) => {
     const content = document.querySelector('#content');
@@ -47,11 +44,43 @@ const handleResponse = (xhr, parseResponse) => {
             const eventYear = eventSplit[0];
 
             //the math
+
+            //https://date-fns.org/ - library
+            //import { interval } from 'date-fns'
+
             //years, months, days, hours, minutes, seconds
             //   let duration = interval.intervalToDuration({
             //       start: new Date(todayYear, todayMonth, todayDay, 0, 0, 0),
             //       end: new Date(eventYear, eventMonth, eventDay, 0, 0, 0)
             //   });
+
+
+
+            //https://www.npmjs.com/package/date-interval-comparator
+
+            // let comparator = require('date-interval-comparator');
+            // let A = ["06/05/2015", "06/10/2015"];
+            // let B = ["05/05/2015", "05/10/2015"];
+            // comparator.compare(A, B);
+            // console.log(comparator.compare(A, B));
+
+
+            //THIS ONE
+            //https://www.npmjs.com/package/datetime-types
+            //npm i datetime-types
+
+            //https://github.com/aholstenson/datetime-types/blob/master/src/DateInterval.ts
+
+            // import { LocalDate, DateInterval } from 'datetime-types';
+
+            // const dateHopeWork = LocalDate.of(2021, 10, 2);
+            // const dateHopeWork2 = LocalDate.of(2022, 11, 3);
+            // const time = DateInterval.from({
+            //     start: dateHopeWork,
+            //     end: dateHopeWork2
+            // });
+
+            // console.log(time);
 
             const countdownDay = eventDay - todayDay;
             const countdownMonth = eventMonth - todayMonth;
@@ -117,8 +146,9 @@ const handleResponse = (xhr, parseResponse) => {
             console.log(`EventDays: ${eventDate} y: ${eventYear} m: ${eventMonth} d: ${eventDay}`);
 
             //countdown.innerHTML = `${countdownYear} years, ${countdownMonth} months, and ${countdownDay} days away.`;
-            tDate.innerHTML = `${tMonth} ${todayDay}, ${todayYear}`;
-            eDate.innerHTML = `${eMonth} ${eventDay}, ${eventYear}`;
+            tDate.innerHTML = `Today's Date : <br>${tMonth} ${todayDay}, ${todayYear}`;
+            eDate.innerHTML = `Event's Date: <br>${eMonth} ${eventDay}, ${eventYear}`;
+            countdown.innerHTML = `${obj.name}`;
             days.innerHTML = `${countdownDay}`;
             months.innerHTML = `${countdownMonth}`;
             years.innerHTML = `${countdownYear}`;

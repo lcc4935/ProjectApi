@@ -24,6 +24,8 @@
     "eslint-plugin-import": "^2.24.2"
   },
   "dependencies": {
-    "date-fns": "^2.25.0"
+    "date-fns": "^2.25.0",
+    "date-interval-comparator": "^0.1.7",
+    "datetime-types": "^0.3.0"
   }
 }

@@ -10,7 +10,6 @@ h3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: .2fr .1fr 1fr 1fr;
-  border: 2px solid black;
 }
 
 .title {
@@ -39,11 +38,10 @@ h3 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: .5fr 1.5fr 3fr;
-  border: 2px solid black;
 }
 
 #content {
-  background-color: green;
+  background-color: white;
   grid-column: 1 /span 2;
   grid-row: 1/ span 1;
 
@@ -51,7 +49,7 @@ h3 {
 }
 
 #todayDate {
-  background-color: purple;
+  background-color: white;
   grid-column: 1 /span 1;
   grid-row: 2/ span 1;
 
@@ -59,7 +57,7 @@ h3 {
 }
 
 #eventDate {
-  background-color: pink;
+  background-color: white;
   grid-column: 2 /span 1;
   grid-row: 2/ span 1;
 
@@ -67,7 +65,7 @@ h3 {
 }
 
 #countdown {
-  background-color: blue;
+  background-color: white;
   grid-column: 1 /span 2;
   grid-row: 3/ span 1;
 
@@ -78,7 +76,6 @@ h3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr;
-  border: 2px solid red;
 }
 
 .day {
@@ -103,8 +100,14 @@ h3 {
   box-shadow: 5px 5px 2px 0px rgba(0, 0, 0, .8);
 
   color: #ba324f;
-  font-size: 28px;
+  font-size: 80px;
 
-  padding: 50px, 10px, 50px, 10px;
+  text-align: center;
+
+  padding: 80px 40px;
   margin: 10px;
+}
+
+#todayDate, #eventDate {
+  font-size: 30px;
 }
