@@ -1,3 +1,6 @@
+// https://date-fns.org/ - library
+const intervalToDuration = require('date-fns/intervalToDuration');
+
 const events = {};
 
 // JSON Body
@@ -57,10 +60,17 @@ const addEvent = (request, response, body) => {
     return respondJSON(request, response, 400, responseJSON);
   }
 
+  // years, months, days, hours, minutes, seconds
+  const duration = intervalToDuration({
+    start: new Date(2021, 12, 21, 0, 0, 0),
+    end: new Date(2022, 4, 15, 0, 0, 0),
+  });
+
   // Event object
   events[body.name] = {
     name: body.name,
     date: body.date,
+    duration,
   };
   responseJSON.message = 'Event created';
   return respondJSON(request, response, 201, responseJSON);

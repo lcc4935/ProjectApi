@@ -14,7 +14,7 @@ const handleResponse = (xhr, parseResponse) => {
         //success
         case 200:
             obj = parseJSON(xhr)
-            console.log(obj);
+            console.log("obj, " + obj + "more " + obj.duration);
             //formating, reference: https://www.freecodecamp.org/news/javascript-date-now-how-to-get-the-current-date-in-javascript/
 
             //today date
@@ -42,45 +42,6 @@ const handleResponse = (xhr, parseResponse) => {
             const eventMonth = eventSplit[1];
             //year
             const eventYear = eventSplit[0];
-
-            //the math
-
-            //https://date-fns.org/ - library
-            //import { interval } from 'date-fns'
-
-            //years, months, days, hours, minutes, seconds
-            //   let duration = interval.intervalToDuration({
-            //       start: new Date(todayYear, todayMonth, todayDay, 0, 0, 0),
-            //       end: new Date(eventYear, eventMonth, eventDay, 0, 0, 0)
-            //   });
-
-
-
-            //https://www.npmjs.com/package/date-interval-comparator
-
-            // let comparator = require('date-interval-comparator');
-            // let A = ["06/05/2015", "06/10/2015"];
-            // let B = ["05/05/2015", "05/10/2015"];
-            // comparator.compare(A, B);
-            // console.log(comparator.compare(A, B));
-
-
-            //THIS ONE
-            //https://www.npmjs.com/package/datetime-types
-            //npm i datetime-types
-
-            //https://github.com/aholstenson/datetime-types/blob/master/src/DateInterval.ts
-
-            // import { LocalDate, DateInterval } from 'datetime-types';
-
-            // const dateHopeWork = LocalDate.of(2021, 10, 2);
-            // const dateHopeWork2 = LocalDate.of(2022, 11, 3);
-            // const time = DateInterval.from({
-            //     start: dateHopeWork,
-            //     end: dateHopeWork2
-            // });
-
-            // console.log(time);
 
             const countdownDay = eventDay - todayDay;
             const countdownMonth = eventMonth - todayMonth;
@@ -148,7 +109,8 @@ const handleResponse = (xhr, parseResponse) => {
             //countdown.innerHTML = `${countdownYear} years, ${countdownMonth} months, and ${countdownDay} days away.`;
             tDate.innerHTML = `Today's Date : <br>${tMonth} ${todayDay}, ${todayYear}`;
             eDate.innerHTML = `Event's Date: <br>${eMonth} ${eventDay}, ${eventYear}`;
-            countdown.innerHTML = `${obj.name}`;
+            // countdown.innerHTML = `${obj.name}`;
+            countdown.innerHTML = `${obj.duration}`;
             days.innerHTML = `${countdownDay}`;
             months.innerHTML = `${countdownMonth}`;
             years.innerHTML = `${countdownYear}`;
@@ -285,10 +247,6 @@ const init = () => {
 
     const addEvent = (e) => sendPost(e, nameForm, false);
     const updateEvent = (e) => sendPost(e, nameForm, true);
-
-    const addButton = document.querySelector('#addButton');
-    const removeButton = document.querySelector('#removeButton');
-
 
     nameForm.addEventListener('submit', addEvent);
 
