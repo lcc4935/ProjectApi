@@ -14,7 +14,7 @@ const handleResponse = (xhr, parseResponse) => {
         //success
         case 200:
             obj = parseJSON(xhr)
-            console.log("obj, " + obj + "more " + obj.duration);
+            //console.log("obj, " + obj + "more " + obj.duration.days);
             //formating, reference: https://www.freecodecamp.org/news/javascript-date-now-how-to-get-the-current-date-in-javascript/
 
             //today date
@@ -31,21 +31,20 @@ const handleResponse = (xhr, parseResponse) => {
             //year
             const todayYear = todaySplit[2];
 
+            obj.duration.start = new Date(todayYear, todayMonth, todayDay, 0, 0, 0);
 
             //event date
 
-            const eventDate = obj.date;
-            eventSplit = eventDate.split('-');
-            //day
-            const eventDay = eventSplit[2];
-            //month
-            const eventMonth = eventSplit[1];
-            //year
-            const eventYear = eventSplit[0];
+            // const eventDate = obj.date;
+            // eventSplit = eventDate.split('-');
+            // //day
+            // const eventDay = eventSplit[2];
+            // //month
+            // const eventMonth = eventSplit[1];
+            // //year
+            // const eventYear = eventSplit[0];
 
-            const countdownDay = eventDay - todayDay;
-            const countdownMonth = eventMonth - todayMonth;
-            const countdownYear = eventYear - todayYear;
+            // obj.duration.end = new Date(eventYear, eventMonth, eventDay, 0, 0, 0);
 
             //Month names
             let tMonth;
@@ -107,14 +106,12 @@ const handleResponse = (xhr, parseResponse) => {
             console.log(`EventDays: ${eventDate} y: ${eventYear} m: ${eventMonth} d: ${eventDay}`);
 
             //countdown.innerHTML = `${countdownYear} years, ${countdownMonth} months, and ${countdownDay} days away.`;
-            tDate.innerHTML = `Today's Date : <br>${tMonth} ${todayDay}, ${todayYear}`;
+            tDate.innerHTML = `Today's Date: <br>${tMonth} ${todayDay}, ${todayYear}`;
             eDate.innerHTML = `Event's Date: <br>${eMonth} ${eventDay}, ${eventYear}`;
-            // countdown.innerHTML = `${obj.name}`;
-            countdown.innerHTML = `${obj.duration}`;
-            days.innerHTML = `${countdownDay}`;
-            months.innerHTML = `${countdownMonth}`;
-            years.innerHTML = `${countdownYear}`;
-            //countdown.innerHTML = `<b>Event: ${obj.name} on ${eventDate} is ${duration} away.</b>`;
+            countdown.innerHTML = `${obj.name}`;
+            days.innerHTML = `${obj.duration.days}`;
+            months.innerHTML = `${obj.duration.months}`;
+            years.innerHTML = `${obj.duration.years}`;
 
 
             break;
@@ -160,6 +157,11 @@ const getRequest = (e, eventForm) => {
     let name = selection.options[selection.selectedIndex].value;
     url += `?name=${name}`;
 
+    // if (name == "christmas") {
+    //     nameField = "Christmas";
+    //     dateField = "2021-12-25";
+    // }
+
     const method = eventForm.getAttribute('method');
 
     const xhr = new XMLHttpRequest();
@@ -188,8 +190,6 @@ const sendPost = (e, nameForm, update) => {
     }
 
     const nameMethod = nameForm.getAttribute('method');
-
-
 
     const dateField = nameForm.querySelector('#dateField');
 

@@ -6,6 +6,11 @@ h3 {
   color: #020402;
 }
 
+h4 {
+  color: #ba324f;
+  font-size: 40px;
+}
+
 .wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -16,6 +21,8 @@ h3 {
   background-color: #ba324f;
   grid-column: 1 / span 3;
   grid-row: 1/ span 1;
+
+  padding: 10px;
 }
 
 .info {
@@ -24,6 +31,7 @@ h3 {
   grid-row: 3/ span 2;
 
   display: inline-block;
+  padding: 10px;
 }
 
 .display {
@@ -32,6 +40,8 @@ h3 {
 
   background-color: #ffffff;
   display: inline-block;
+
+  padding: 10px;
 }
 
 .miniWrapper {

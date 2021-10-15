@@ -61,10 +61,12 @@ const addEvent = (request, response, body) => {
   }
 
   // years, months, days, hours, minutes, seconds
-  const duration = intervalToDuration({
-    start: new Date(2021, 12, 21, 0, 0, 0),
-    end: new Date(2022, 4, 15, 0, 0, 0),
-  });
+  // const duration = intervalToDuration({
+  //   start: new Date(2021, 12, 21, 0, 0, 0),
+  //   end: new Date(2022, 4, 15, 0, 0, 0),
+  // });
+
+  // console.log(duration);
 
   // Event object
   events[body.name] = {
@@ -72,6 +74,25 @@ const addEvent = (request, response, body) => {
     date: body.date,
     duration,
   };
+
+  const eventDate = events[body.name].date;
+  eventSplit = eventDate.split('-');
+  // day
+  const eventDay = eventSplit[2];
+  // month
+  const eventMonth = eventSplit[1];
+  // year
+  const eventYear = eventSplit[0];
+
+  const duration = intervalToDuration({
+    start: new Date(2021, 12, 21, 0, 0, 0),
+    end: new Date(eventYear, eventMonth, eventDay, 0, 0, 0),
+  });
+
+  // events[body.name].duration.end = new Date(eventYear, eventMonth, eventDay, 0, 0, 0);
+
+  // console.log(events[body.name].date);
+
   responseJSON.message = 'Event created';
   return respondJSON(request, response, 201, responseJSON);
 };

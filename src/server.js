@@ -1,10 +1,6 @@
 const http = require('http');
 const url = require('url');
 const query = require('querystring');
-
-// // https://date-fns.org/ - library
-// const intervalToDuration = require('date-fns/intervalToDuration');
-
 const htmlHandler = require('./htmlResponses.js');
 const jsonHandler = require('./jsonResponses.js');
 
@@ -43,11 +39,6 @@ const handleGet = (request, response, parsedUrl) => {
   } else if (parsedUrl.pathname === '/client.js') {
     htmlHandler.getJS(request, response);
   } else if (parsedUrl.pathname === '/getEvent') {
-    // // years, months, days, hours, minutes, seconds
-    // const duration = intervalToDuration({
-    //   start: new Date(2021, 12, 21, 0, 0, 0),
-    //   end: new Date(2022, 4, 15, 0, 0, 0),
-    // });
     jsonHandler.getEvent(request, response, params);
   } else if (parsedUrl.pathname === '/getAll') {
     jsonHandler.getAll(request, response);
