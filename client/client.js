@@ -23,7 +23,7 @@ const handleResponse = (xhr, parseResponse) => {
             const today = new Date(dateNow);
             const todayDate = today.toLocaleDateString();
 
-            todaySplit = todayDate.split('/');
+            const todaySplit = todayDate.split('/');
             //day
             const todayDay = todaySplit[1];
             //month
@@ -31,18 +31,18 @@ const handleResponse = (xhr, parseResponse) => {
             //year
             const todayYear = todaySplit[2];
 
-            obj.duration.start = new Date(todayYear, todayMonth, todayDay, 0, 0, 0);
+            //obj.duration.start = new Date(todayYear, todayMonth, todayDay, 0, 0, 0);
 
             //event date
 
-            // const eventDate = obj.date;
-            // eventSplit = eventDate.split('-');
-            // //day
-            // const eventDay = eventSplit[2];
-            // //month
-            // const eventMonth = eventSplit[1];
-            // //year
-            // const eventYear = eventSplit[0];
+            const eventDate = obj.date;
+            const eventSplit = eventDate.split('-');
+            //day
+            const eventDay = eventSplit[2];
+            //month
+            const eventMonth = eventSplit[1];
+            //year
+            const eventYear = eventSplit[0];
 
             // obj.duration.end = new Date(eventYear, eventMonth, eventDay, 0, 0, 0);
 
@@ -156,11 +156,6 @@ const getRequest = (e, eventForm) => {
     let selection = document.querySelector('#eventField');
     let name = selection.options[selection.selectedIndex].value;
     url += `?name=${name}`;
-
-    // if (name == "christmas") {
-    //     nameField = "Christmas";
-    //     dateField = "2021-12-25";
-    // }
 
     const method = eventForm.getAttribute('method');
 

@@ -72,11 +72,12 @@ const addEvent = (request, response, body) => {
   events[body.name] = {
     name: body.name,
     date: body.date,
-    duration,
   };
 
+  // Event Date
+
   const eventDate = events[body.name].date;
-  eventSplit = eventDate.split('-');
+  const eventSplit = eventDate.split('-');
   // day
   const eventDay = eventSplit[2];
   // month
@@ -84,10 +85,30 @@ const addEvent = (request, response, body) => {
   // year
   const eventYear = eventSplit[0];
 
+  const dateEnd = new Date(eventYear, eventMonth, eventDay, 0, 0, 0);
+
+  // Today date
+
+  const dateNow = Date.now();
+  const today = new Date(dateNow);
+  const todayDate = today.toLocaleDateString();
+
+  const todaySplit = todayDate.split('/');
+  // day
+  const todayDay = todaySplit[1];
+  // month
+  const todayMonth = todaySplit[0];
+  // year
+  const todayYear = todaySplit[2];
+
+  const dateStart = new Date(todayYear, todayMonth, todayDay, 0, 0, 0);
+
   const duration = intervalToDuration({
-    start: new Date(2021, 12, 21, 0, 0, 0),
-    end: new Date(eventYear, eventMonth, eventDay, 0, 0, 0),
+    start: dateStart,
+    end: dateEnd,
   });
+
+  events[body.name].duration = duration;
 
   // events[body.name].duration.end = new Date(eventYear, eventMonth, eventDay, 0, 0, 0);
 
